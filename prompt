@@ -1,0 +1,184 @@
+🎫 **MetaEvent: Anti-Scalping Mechanism Deep Dive**
+**🔥 MASALAH SCALPING - Context Indonesia**
+**Real Cases Yang Bikin Rakyat Marah: **Coldplay Jakarta 2024: - Tiket sold out dalam 30 menit - Muncul di resale market 3-10x harga asli - Bot membeli ribuan tiket sekaligus - Fans asli tidak kebagian Bruno Mars, Blackpink, dll: - Pattern yang sama berulang - Scalper organized crime level - Platform existing (tiket.com, etc) gagal prevent **Kenapa Traditional Ticketing Gagal?**
+
+```
+ProblemCurrent SolutionFailure PointBot AttacksCAPTCHABypass-able dengan bot modernBulk BuyingLimit per akunScalper bikin ratusan akunResale Markup"Official resale only"Black market tetap adaFake TicketsBarcode verificationBisa di-duplicate/screenshotTransfer FraudName verificationSulit enforce di lapangan. 💎 METAEVENT ANTI-SCALPING ARCHITECTURE
+Layer 1: Identity-Bound NFT Tickets (Soul-Bound) How It Works (User Flow):
+PEMBELIAN TIKET:
+1. User connect wallet (MetaMask)
+2. WAJIB KYC Light:
+   - Upload foto selfie
+   - Upload KTP/ID
+   - Phone number verification (OTP)
+   - Liveness detection (blink, turn head)
+
+3. Wallet address di-bind ke identity:
+   - Hash biometric data (tidak store raw data)
+   - Link ke NIK/ID number (encrypted)
+   - Create "reputation score"
+
+4. Buy ticket → Minted as NFT
+   - Locked to wallet for 48 hours
+   - Cannot transfer/list immediately
+   - Smart contract enforce rules automatically
+
+MASUK EVENT:
+1. Show NFT ticket (QR code)
+2. Face scan at entrance
+3. Match face hash dengan ticket hash
+4. Burn ticket NFT (proof of attendance minted)
+5. Original NFT destroyed → cannot reuse  🛡️ ANTI-SCALPING MECHANISMS (Multi-Layer Defense)
+Mechanism #1: Progressive Pricing Attack
+Mechanism #2: Velocity Limits (Bot Prevention) Mechanism #3: Lottery + Whitelist System TIER 1 (Loyal Fans):
+- Alice pernah nonton 3 konser sebelumnya (punya POAP)
+- Dia auto-whitelist, bisa beli guaranteed 48 jam sebelum public sale
+- Bayar normal price
+
+TIER 2 (Lottery):
+- Bob daftar lottery 2 hari sebelum sale
+- 10,000 orang daftar, 4,000 dipilih random
+- Bob menang lottery, dapat link private untuk beli
+
+TIER 3 (FCFS):
+- Charlie tidak daftar lottery
+- Dia coba beli saat public sale
+- Harus ikut rebutan, strict velocity limits 
+
+Mechanism #4: Dynamic Pricing Curve
+// Price increases with demand (but organizer sets limits)
+
+function calculateDynamicPrice(ticketsSold, totalSupply, basePrice) {
+    const soldPercentage = ticketsSold / totalSupply;
+    
+    // Bonding curve: price increases as supply decreases
+    const priceMultiplier = 1 + (soldPercentage * 0.5); // Max 50% increase
+    
+    const currentPrice = basePrice * priceMultiplier;
+    
+    // Organizer sets price ceiling
+    const maxPrice = basePrice * 1.3; // Max 30% di atas base price
+    
+    return Math.min(currentPrice, maxPrice);
+}
+
+// Example:
+// Base price: 1 juta
+// 0% sold: 1 juta
+// 50% sold: 1.25 juta
+// 100% sold: 1.3 juta (capped)
+
+// Scalper harus beli mahal, jual lebih mahal lagi
+// Profit margin sangat kecil Mechanism #5: Social Graph Verification // Prioritize real community members
+
+function calculateReputationScore(wallet) {
+    let score = 0;
+    
+    // On-chain history
+    score += walletAge(wallet) / 30; // 1 point per month
+    score += transactionCount(wallet) / 100; // Active user
+    score += nftCollectionDiversity(wallet); // Real collector vs flipper
+    
+    // Event history
+    score += pastEventAttendance(wallet) * 10; // POAP holder
+    score += neverResoldTickets(wallet) ? 50 : 0; // Loyal fan
+    
+    // Social connections
+    score += connectedToOtherAttendees(wallet) * 5; // Friend network
+    
+    // Penalties
+    score -= pastScalpingBehavior(wallet) * 100; // Permanent mark
+    
+    return score;
+}
+
+function prioritizeBuyers(buyers) {
+    // Sort by reputation score
+    return buyers.sort((a, b) => 
+        calculateReputationScore(b.wallet) - 
+        calculateReputationScore(a.wallet)
+    );
+} Mechanism #6: Proof of Attendance Protocol (POAP) Rewards // Incentivize actually attending, not reselling
+
+const POAP_BENEFITS = {
+    // After event attendance
+    immediate: {
+        nftBadge: "Unique design per event",
+        exclusiveContent: "Behind-scenes footage, artist message",
+        futureAccess: "Priority for next events"
+    },
+    
+    // Long-term benefits
+    accumulated: {
+        "3 POAPs": "10% discount next event",
+        "5 POAPs": "Guaranteed whitelist next event",
+        "10 POAPs": "VIP upgrade opportunity",
+        "20 POAPs": "Meet & greet access"
+    }
+};
+
+function mintPOAP(attendee, event) {
+    // Only mint if physically attended
+    require(verifiedAttendance(attendee, event), "Must attend to get POAP");
+    
+    // Burn original ticket NFT
+    burnTicket(attendee.ticketId);
+    
+    // Mint POAP (soulbound, cannot transfer)
+    const poap = mintSoulboundNFT({
+        attendee: attendee.wallet,
+        event: event.id,
+        timestamp: block.timestamp,
+        metadata: event.poapMetadata
+    });
+    
+    // Update reputation score
+    incrementReputationScore(attendee.wallet, 10);
+    
+    return poap;
+}
+
+// Scalper yang resell tidak dapat POAP
+// Mereka lose future benefits
+// Real fans accumulate value over time Scalper Profit = 
+    (Resale Price * 0.5) - Original Price - KYC Cost - Time Lock Cost - Reputation Damage
+
+Example:
+Buy: 1 juta
+Sell: 5 juta
+Receive: 2.5 juta (50% tax)
+Profit: 1.5 juta
+
+If buy 100 tickets:
+- Need 100 KYC-verified accounts (impossible or very expensive)
+- Locked 48 hours (opportunity cost)
+- Each account flagged permanently
+- Future events blacklisted
+- Profit: 150 juta (bukan 400 juta)
+
+ROI: 150% (turun drastis)
+
+Risk: TINGGI
+- Bisa di-blacklist
+- Reputasi hancur
+- Accounts burned 💰 REVENUE MODEL (Win-Win-Win)
+For Organizers: Traditional:
+- Sell ticket 1 juta
+- Scalper jual 5 juta
+- Organizer dapat: 1 juta (0% dari markup)
+
+MetaEvent:
+- Sell ticket 1 juta
+- Scalper jual 5 juta
+- Organizer dapat: 1 juta + 1.5 juta (30% royalty) = 2.5 juta
+- PLUS long-term: Fans dengan POAP lebih loyal, repeat customer For Fans: Traditional:
+- Ketinggalan FCFS
+- Beli dari scalper 5 juta
+- No guarantees
+
+MetaEvent:
+- Lottery system: Fair chance
+- Loyalty rewards: Priority access
+- If resale: Max 30% markup (capped by tax)
+- POAP: Future benefits
+ Sekarang buatkan backend/api menggunakan nuxt v4 server/ pastikan fungsional, gunakan sepolia testnet, dan berikan petunjuk detail apa yang harus saya siapkan!
