@@ -23,7 +23,6 @@ const toggleDarkMode = () => {
     document.documentElement.classList.remove("dark");
   }
 };
-
 </script>
 
 <template>
@@ -33,7 +32,7 @@ const toggleDarkMode = () => {
     <div class="container flex h-14 max-w-screen-2xl items-center">
       <!-- Logo -->
       <div class="mr-6 hidden md:flex">
-        <NuxtLink to="/" class="mr-4 flex items-center space-x-1">
+        <NuxtLink to="/" class="mr-4 flex items-center space-x-1 p-2">
           <img class="h-5 w-5" src="/logo.png" />
           <span class="hidden font-bold sm:inline-block">Arteka</span>
         </NuxtLink>
@@ -131,7 +130,13 @@ const toggleDarkMode = () => {
                   </Button>
                 </SignInButton>
                 <SignUpButton>
-                  <Button size="sm" class="p-4 text-bold mr-1" variant="outline"> Daftar </Button>
+                  <Button
+                    size="sm"
+                    class="p-4 text-bold mr-1"
+                    variant="outline"
+                  >
+                    Daftar
+                  </Button>
                 </SignUpButton>
               </SignedOut>
               <SignedIn>
@@ -177,15 +182,14 @@ const toggleDarkMode = () => {
               <div class="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
                 <div class="flex flex-col space-y-3">
                   <div class="flex flex-col space-y-3">
-                    <NuxtLink
-                      v-for="item in components"
-                      :key="item.title"
-                      :to="item.href"
-                    >
-                      <h4 class="font-medium">{{ item.title }}</h4>
+                    <NuxtLink to="/marketplace">
+                      <h4 class="font-medium">Marketplace</h4>
                     </NuxtLink>
-                    <NuxtLink to="/units/grammar">
-                      <h4 class="font-medium">Grammar</h4>
+                    <NuxtLink to="/digital-rights">
+                      <h4 class="font-medium">Digital Rights</h4>
+                    </NuxtLink>
+                    <NuxtLink to="/funding">
+                      <h4 class="font-medium">Funding</h4>
                     </NuxtLink>
                   </div>
 
