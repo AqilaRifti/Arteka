@@ -13,7 +13,7 @@
         and ownership proof. Say goodbye to tampering and hello to total
         creative control.
       </p>
-      <NuxtLink to="/units/tka"><Button>Secure Work -> </Button></NuxtLink>
+      <NuxtLink to="/digital-rights"><Button>Secure Work -> </Button></NuxtLink>
     </div>
     <div
       class="relative flex w-full flex-col items-center justify-center min-h-[300px]"

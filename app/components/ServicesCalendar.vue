@@ -12,7 +12,7 @@
         Fulfill your professional commitment with outstanding service. In
         return, you secure prompt and reliable payment for your valuable work.
       </p>
-      <NuxtLink to="/units/tka"><Button>Start a service -> </Button></NuxtLink>
+      <NuxtLink to="/marketplace"><Button>Start a service -> </Button></NuxtLink>
     </div>
     <div
       class="relative flex w-full flex-col items-center justify-center min-h-[300px]"

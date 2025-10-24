@@ -14,7 +14,7 @@
         vision and expand your reach. It’s your chance to grow your creative
         brand with purpose, speed, and impact.
       </p>
-      <NuxtLink to="/units/tka"><Button>Start Funding -> </Button></NuxtLink>
+      <NuxtLink to="/funding"><Button>Start Funding -> </Button></NuxtLink>
     </div>
     <div
       class="relative flex w-full flex-col items-center justify-center min-h-[300px]"

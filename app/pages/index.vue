@@ -16,9 +16,11 @@
           >
             Start, Secure, Sell
             <br />
-            <Button variant="outline" class="text-black dark:text-white"
-              >Access Global Market 🚀</Button
-            >
+            <NuxtLink to="/marketplace">
+              <Button variant="outline" class="text-black dark:text-white"
+                >Access Global Market 🚀</Button
+              >
+            </NuxtLink>
           </span>
           <ParticlesBg
             class="absolute inset-0"
