@@ -64,6 +64,14 @@ const toggleDarkMode = () => {
                 Funding
               </NavigationMenuLink>
             </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                href="/translate"
+                :class="navigationMenuTriggerStyle()"
+              >
+                Translate
+              </NavigationMenuLink>
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
       </div>

@@ -1,6 +1,79 @@
 {
-  "address": "0x849F137657Ceb5C3C750a5BcB0d6EA76D5E65D00",
+  "address": "0x1D840A569205Dc9dF973Cfb21e0e6adAe6bb5598",
   "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "workId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "licensee",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "licenseType",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "expiryTime",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "price",
+          "type": "uint256"
+        }
+      ],
+      "name": "LicenseGranted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "workId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "creator",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "payer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "RoyaltyPaid",
+      "type": "event"
+    },
     {
       "anonymous": false,
       "inputs": [
@@ -55,6 +128,68 @@
         }
       ],
       "name": "WorkRegistered",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "workId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "transferType",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "price",
+          "type": "uint256"
+        }
+      ],
+      "name": "WorkTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "workId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "updateType",
+          "type": "string"
+        }
+      ],
+      "name": "WorkUpdated",
       "type": "event"
     },
     {
@@ -115,6 +250,11 @@
           "type": "address"
         },
         {
+          "internalType": "address",
+          "name": "currentOwner",
+          "type": "address"
+        },
+        {
           "internalType": "string",
           "name": "title",
           "type": "string"
@@ -145,22 +285,24 @@
           "type": "uint256"
         },
         {
+          "internalType": "uint256",
+          "name": "registrationBlock",
+          "type": "uint256"
+        },
+        {
           "internalType": "bool",
           "name": "isActive",
           "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "getAllActiveWorks",
-      "outputs": [
+        },
         {
-          "internalType": "uint256[]",
-          "name": "",
-          "type": "uint256[]"
+          "internalType": "uint256",
+          "name": "royaltyPercentage",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "transferCount",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -188,6 +330,175 @@
     {
       "inputs": [
         {
+          "internalType": "bytes32",
+          "name": "messageHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getEthSignedMessageHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "getOwnedWorks",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "workId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getRoyaltyHistory",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "payer",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "workId",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct ArtekaDigitalRights.RoyaltyPayment[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "workId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getTransferHistory",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "from",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "to",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "blockNumber",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "transferType",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "price",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct ArtekaDigitalRights.TransferRecord[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "workId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "price",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "getTransferMessageHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "uint256",
           "name": "workId",
           "type": "uint256"
@@ -203,6 +514,11 @@
         {
           "internalType": "address",
           "name": "creator",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "currentOwner",
           "type": "address"
         },
         {
@@ -239,6 +555,16 @@
           "internalType": "bool",
           "name": "isActive",
           "type": "bool"
+        },
+        {
+          "internalType": "uint256",
+          "name": "royaltyPercentage",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "transferCount",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -252,30 +578,178 @@
           "type": "uint256"
         }
       ],
-      "name": "getWorkMetadata",
+      "name": "getWorkLicenses",
       "outputs": [
         {
-          "internalType": "string",
-          "name": "fileName",
-          "type": "string"
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "workId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "licensee",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "startTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "expiryTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "licenseType",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "price",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "isActive",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct ArtekaDigitalRights.License[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "workId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "licensee",
+          "type": "address"
         },
         {
           "internalType": "uint256",
-          "name": "fileSize",
+          "name": "duration",
           "type": "uint256"
         },
         {
           "internalType": "string",
-          "name": "mimeType",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "originalLanguage",
+          "name": "licenseType",
           "type": "string"
         }
       ],
+      "name": "grantLicense",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "hasLicense",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "ownedWorks",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "platformFeePercentage",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "platformWallet",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "ethSignedMessageHash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes",
+          "name": "signature",
+          "type": "bytes"
+        }
+      ],
+      "name": "recoverSigner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "pure",
       "type": "function"
     },
     {
@@ -324,6 +798,21 @@
           "internalType": "string",
           "name": "_originalLanguage",
           "type": "string"
+        },
+        {
+          "internalType": "string[]",
+          "name": "_tags",
+          "type": "string[]"
+        },
+        {
+          "internalType": "string",
+          "name": "_category",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_royaltyPercentage",
+          "type": "uint256"
         }
       ],
       "name": "registerWork",
@@ -341,12 +830,314 @@
       "inputs": [
         {
           "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "royaltyHistory",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "payer",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "workId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "newFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "setPlatformFee",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newWallet",
+          "type": "address"
+        }
+      ],
+      "name": "setPlatformWallet",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "sig",
+          "type": "bytes"
+        }
+      ],
+      "name": "splitSignature",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "r",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "s",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint8",
+          "name": "v",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalRoyaltiesPaid",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferHistory",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "blockNumber",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "transferType",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "price",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "workId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "transferType",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "price",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "signature",
+          "type": "bytes"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "workId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "newPercentage",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateRoyaltyPercentage",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "workId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "_description",
+          "type": "string"
+        },
+        {
+          "internalType": "string[]",
+          "name": "_tags",
+          "type": "string[]"
+        }
+      ],
+      "name": "updateWorkMetadata",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "usedSignatures",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
           "name": "workId",
           "type": "uint256"
         },
         {
           "internalType": "address",
           "name": "creator",
+          "type": "address"
+        }
+      ],
+      "name": "verifyCreator",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "workId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "licensee",
+          "type": "address"
+        }
+      ],
+      "name": "verifyLicense",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "workId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "owner",
           "type": "address"
         }
       ],
@@ -380,6 +1171,60 @@
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "workLicenses",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "workId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "licensee",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "startTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "expiryTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "licenseType",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "price",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "isActive",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
       "name": "workMetadata",
@@ -402,6 +1247,11 @@
         {
           "internalType": "string",
           "name": "originalLanguage",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "category",
           "type": "string"
         }
       ],

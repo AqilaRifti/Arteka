@@ -22,6 +22,11 @@ function compileSolidity() {
       [SOL_FILE]: { content: source },
     },
     settings: {
+      viaIR: true,
+      optimizer: {
+        enabled: true,
+        runs: 200
+      },
       outputSelection: {
         "*": { "*": ["abi", "evm.bytecode"] },
       },

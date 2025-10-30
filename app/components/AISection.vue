@@ -5,6 +5,9 @@
     >
       <span class="text-4xl font-semibold"> Accelerate With AI </span>
       <span class="font-sans font-light">Deliver amazing creations with ease.</span>
+      <NuxtLink to="/translate">
+      <Button variant="outline" class="text-black dark:text-white" style="z-index: 99999 !important">Translate For Reach 🚀</Button>
+      </NuxtLink>
     </div>
     <div class="flex">
       <Spline

@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import tailwindcss from '@tailwindcss/vite'
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
@@ -7,7 +7,13 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  modules: ["@nuxt/image", "shadcn-nuxt", "@clerk/nuxt", "@nuxtjs/color-mode"],
+  modules: [
+    "@nuxt/image",
+    "shadcn-nuxt",
+    "@clerk/nuxt",
+    "@nuxtjs/color-mode",
+    "@pinia/nuxt",
+  ],
   css: ["~/assets/css/tailwind.css"],
   shadcn: {
     /**
@@ -31,35 +37,26 @@ export default defineNuxtConfig({
     afterSignUpUrl: "/dashboard",
   },
   runtimeConfig: {
-    // Private keys (server-side only)
-    private: {
-      encryptionKey:
-        process.env.ENCRYPTION_KEY ||
-        "0xca932885c828487cc5e6117a1d5fcf8131cf234288410cf5ca55a5ee49639cba",
-    },
-
-    // Public keys (exposed to client)
-    public: {
-      supabaseUrl: process.env.SUPABASE_URL,
-      supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
-    },
-
-    // Server-side only
-    supabaseUrl: process.env.SUPABASE_URL,
-    supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
-    supabaseServiceKey: process.env.SUPABASE_SERVICE_KEY,
-
-    // Blockchain config
-    sepoliaRpcUrl: process.env.SEPOLIA_RPC_URL,
-    privateKey: process.env.PRIVATE_KEY,
-    deployerPrivateKey: process.env.DEPLOYER_PRIVATE_KEY,
-    artekaContractAddress: process.env.ARTEKA_CONTRACT_ADDRESS,
-    marketplaceContractAddress: process.env.MARKETPLACE_CONTRACT_ADDRESS,
-    messagingContractAddress: process.env.MESSAGING_CONTRACT_ADDRESS,
-
-    // Pinata config
+    // Private keys (server-only)
     pinataApiKey: process.env.PINATA_API_KEY,
     pinataSecretKey: process.env.PINATA_SECRET_KEY,
     pinataJwtKey: process.env.PINATA_JWT_KEY,
+    supabaseServiceKey: process.env.SUPABASE_SERVICE_KEY,
+
+    // Public keys (exposed to client)
+    public: {
+      clerkPublishableKey: process.env.NUXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+      walletConnectProjectId:
+        process.env.WALLETCONNECT_PROJECT_ID ||
+        "109ea4071c5bce96bc81b5ec782b49d7",
+      contractAddress:
+        process.env.CONTRACT_ADDRESS ||
+        "0x1D840A569205Dc9dF973Cfb21e0e6adAe6bb5598",
+      sepoliaRpcUrl:
+        process.env.SEPOLIA_RPC_URL ||
+        "https://sepolia.infura.io/v3/fc854b36bd1044cbb4b7f30a5f9134c3",
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
+    },
   },
 });
