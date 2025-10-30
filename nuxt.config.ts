@@ -12,7 +12,6 @@ export default defineNuxtConfig({
     "shadcn-nuxt",
     "@clerk/nuxt",
     "@nuxtjs/color-mode",
-    "@pinia/nuxt",
   ],
   css: ["~/assets/css/tailwind.css"],
   shadcn: {
@@ -55,7 +54,7 @@ export default defineNuxtConfig({
       sepoliaRpcUrl:
         process.env.SEPOLIA_RPC_URL ||
         "https://sepolia.infura.io/v3/fc854b36bd1044cbb4b7f30a5f9134c3",
-      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseUrl: "https://cozhneczrqtxlugkubte.supabase.co",
       supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
     },
   },
